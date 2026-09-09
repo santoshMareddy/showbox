@@ -1,0 +1,5 @@
+// Root build file. The Android Gradle Plugin version is pinned to one already in the
+// local Gradle cache, so a build needs almost nothing from the network.
+plugins {
+    id 'com.android.application' version '8.13.2' apply false
+}

@@ -1,0 +1,25 @@
+# Secrets and machine-specific files: never in the repo
+demo/jellyfin.json
+android/keystore/
+android/keystore.properties
+android/local.properties
+
+# Build output
+app/node_modules/
+app/dist/
+android/build/
+android/.gradle/
+android/app/build/
+android/app/src/main/assets/web/
+
+# Leftovers from the old local demo server
+demo/bin/
+demo/imgcache/
+demo/tunnel.log
+demo/tunnel-url.txt
+
+# Personal
+.obsidian/
+Reference/
+Thumbs.db
+.DS_Store

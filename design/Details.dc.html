@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;display=swap">
+  <style>
+    body { margin: 0; overflow: hidden; background: #0C0818; color: #F6F3FF; font-family: "Instrument Sans", "Segoe UI", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: #FF3D8A; } a:hover { color: #FFD16A; }
+    .display { font-family: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif; }
+    .ico { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+    .art-heir { background: radial-gradient(ellipse at 50% 30%, rgba(255,176,150,.45) 0%, rgba(255,176,150,0) 52%), radial-gradient(ellipse at 15% 100%, #7A2E52 0%, rgba(122,46,82,0) 60%), linear-gradient(180deg, #4A1F3A 0%, #12060F 100%); }
+    .badge { height: 20px; padding: 0 6px; border-radius: 4px; border: 1px solid rgba(255,255,255,.28); font-size: 11px; font-weight: 600; color: #D9D3EE; display: flex; align-items: center; }
+    .action { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; width: 72px; height: 52px; color: #D9D3EE; font-size: 12px; font-weight: 500; }
+    .ep { position: relative; height: 48px; border-radius: 8px; background: #1F1738; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; color: #A59DC6; }
+    .ep.locked { background: #161029; color: #655D8A; }
+    .ep .lk { position: absolute; right: 4px; top: 4px; width: 11px; height: 11px; stroke-width: 2.2; color: #8B83AD; }
+    .range { height: 32px; padding: 0 12px; border-radius: 16px; background: #1F1738; color: #D9D3EE; font-size: 13px; font-weight: 500; display: flex; align-items: center; }
+  </style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; overflow: hidden; background: #0C0818;">
+
+  <div class="art-heir" style="position: absolute; left: 0; top: 0; width: 390px; height: 420px;">
+    <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(12, 8, 24,.35) 0%, rgba(12, 8, 24,0) 22%, rgba(12, 8, 24,0) 45%, rgba(12, 8, 24,1) 100%);"></div>
+  </div>
+
+  <div style="position: absolute; left: 16px; right: 16px; top: 54px; display: flex; align-items: center; justify-content: space-between;">
+    <div style="width: 40px; height: 40px; border-radius: 20px; background: rgba(0,0,0,.45); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); display: flex; align-items: center; justify-content: center; color: #FFFFFF;">
+      <svg class="ico" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"></path></svg>
+    </div>
+    <div style="width: 40px; height: 40px; border-radius: 20px; background: rgba(0,0,0,.45); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); display: flex; align-items: center; justify-content: center; color: #FFFFFF;">
+      <svg class="ico" viewBox="0 0 24 24"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"></path><path d="M12 15V3M8 7l4-4 4 4"></path></svg>
+    </div>
+  </div>
+
+  <div style="position: absolute; left: 0; right: 0; top: 270px; padding: 0 20px; display: flex; flex-direction: column; gap: 12px; box-sizing: border-box;">
+    <div class="display" style="font-size: 30px; font-weight: 800; line-height: 1; letter-spacing: -0.03em; color: #FFFFFF;">Married to the Heir</div>
+
+    <div style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: #A59DC6;">
+      <span>80 episodes</span><span>·</span><span>Romance</span><span>·</span>
+      <div style="display: flex; align-items: center; gap: 4px;"><svg class="ico" style="width: 14px; height: 14px;" viewBox="0 0 24 24"><path d="M12 20.5s-7.5-4.6-9.4-8.9C1.2 8.2 3.6 5 6.9 5c1.9 0 3.5 1.1 5.1 2.8C13.6 6.1 15.2 5 17.1 5c3.3 0 5.7 3.2 4.3 6.6-1.9 4.3-9.4 8.9-9.4 8.9z"></path></svg><span>12.4K</span></div>
+      <div class="badge">Ongoing</div>
+    </div>
+
+    <div style="height: 52px; border-radius: 12px; background: {{accent}}; color: #FFFFFF; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 600; font-size: 16px;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg><span>Continue EP 12</span>
+    </div>
+
+    <div style="display: flex; justify-content: space-between; padding: 0 12px;">
+      <div class="action"><svg class="ico" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></svg><span>My List</span></div>
+      <div class="action"><svg class="ico" viewBox="0 0 24 24"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"></path><path d="M12 15V3M8 7l4-4 4 4"></path></svg><span>Share</span></div>
+      <div class="action"><svg class="ico" viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.3a2 2 0 0 0 2-1.7l1.4-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg><span>Rate</span></div>
+      <div class="action"><svg class="ico" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg><span>Unlock all</span></div>
+    </div>
+
+    <div style="font-size: 14px; line-height: 20px; color: #D9D3EE; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">Elena signs a marriage contract to save her family's company, then discovers her new husband wrote a second one that she never saw.</div>
+
+    <div style="display: flex; gap: 24px; border-bottom: 1px solid rgba(255,255,255,.08); margin-top: 2px;">
+      <div style="padding: 0 0 10px 0; font-size: 15px; font-weight: 600; color: #F6F3FF; border-bottom: 2px solid {{accent}}; margin-bottom: -1px;">Episodes</div>
+      <div style="padding: 0 0 10px 0; font-size: 15px; font-weight: 500; color: #8B83AD;">More like this</div>
+    </div>
+
+    <div style="display: flex; gap: 8px; align-items: center;">
+      <div class="range" style="background: #F6F3FF; color: #0C0818; font-weight: 600;">1 to 30</div>
+      <div class="range">31 to 60</div>
+      <div class="range">61 to 80</div>
+      <div style="margin-left: auto; font-size: 12px; color: #A59DC6;">Free up to EP 10</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px;">
+      <div class="ep">1</div><div class="ep">2</div><div class="ep">3</div><div class="ep">4</div><div class="ep">5</div><div class="ep">6</div>
+      <div class="ep">7</div><div class="ep">8</div><div class="ep">9</div><div class="ep">10</div><div class="ep">11</div>
+      <div class="ep" style="background: {{accent}}; color: #FFFFFF;">12</div>
+      <div class="ep locked"><span>13</span><svg class="ico lk" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg></div>
+      <div class="ep locked"><span>14</span><svg class="ico lk" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg></div>
+      <div class="ep locked"><span>15</span><svg class="ico lk" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg></div>
+      <div class="ep locked"><span>16</span><svg class="ico lk" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg></div>
+      <div class="ep locked"><span>17</span><svg class="ico lk" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg></div>
+      <div class="ep locked"><span>18</span><svg class="ico lk" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg></div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"accent":{"editor":"color","default":"#FF3D8A","options":["#FF3D8A","#8B5CF6","#22D3EE","#FFB43C"],"section":"Theme"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#FF3D8A' };
+  }
+}
+</script>
+</body>
+</html>

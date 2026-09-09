@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;display=swap">
+  <style>
+    body { margin: 0; overflow: hidden; background: #0C0818; color: #F6F3FF; font-family: "Instrument Sans", "Segoe UI", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: #FF3D8A; } a:hover { color: #FFD16A; }
+    .display { font-family: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif; }
+    .ico { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+    .day { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; height: 64px; border-radius: 10px; background: #1F1738; font-size: 11px; font-weight: 600; color: #D9D3EE; }
+    .day .d { font-size: 10px; font-weight: 500; color: #8B83AD; }
+    .task { display: flex; align-items: center; gap: 12px; height: 64px; padding: 0 14px; border-radius: 12px; background: #161029; box-sizing: border-box; }
+    .task .i { width: 36px; height: 36px; border-radius: 18px; background: #1F1738; display: flex; align-items: center; justify-content: center; color: #D9D3EE; flex: none; }
+    .task .btn { height: 32px; padding: 0 12px; border-radius: 16px; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex: none; }
+    .reward { display: flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; color: #F6F3FF; }
+    .tab { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; width: 68px; height: 50px; color: #8B83AD; font-size: 11px; font-weight: 500; }
+  </style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; overflow: hidden; background: #0C0818; display: flex; flex-direction: column;">
+
+  <div style="display: flex; align-items: center; justify-content: space-between; padding: 54px 20px 0 20px; flex: none;">
+    <div class="display" style="font-size: 28px; font-weight: 800; letter-spacing: -0.02em; line-height: 40px;">Rewards</div>
+    <div style="height: 32px; padding: 0 10px 0 8px; border-radius: 16px; background: #1F1738; display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600;">
+      <svg width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="#FFB43C"></circle><circle cx="12" cy="12" r="4.5" fill="none" stroke="rgba(0,0,0,.35)" stroke-width="2"></circle></svg><span>1,250</span>
+    </div>
+  </div>
+
+  <div style="margin: 14px 20px 0 20px; padding: 16px; border-radius: 16px; background: #161029; border: 1px solid rgba(255,255,255,.08); display: flex; flex-direction: column; gap: 12px; flex: none;">
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+      <div style="font-size: 15px; font-weight: 700;">Daily check-in</div>
+      <div style="font-size: 12px; color: #A59DC6;">Day 3 of 7</div>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px;">
+      <div class="day" style="background: rgba(255, 61, 138,.14);"><svg class="ico" style="width: 16px; height: 16px; color: {{accent}}; stroke-width: 2.4;" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"></path></svg><span>+10</span><span class="d">Day 1</span></div>
+      <div class="day" style="background: rgba(255, 61, 138,.14);"><svg class="ico" style="width: 16px; height: 16px; color: {{accent}}; stroke-width: 2.4;" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"></path></svg><span>+10</span><span class="d">Day 2</span></div>
+      <div class="day" style="background: {{accent}}; color: #FFFFFF;"><svg width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="#FFFFFF"></circle><circle cx="12" cy="12" r="4.5" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="2"></circle></svg><span>+15</span><span class="d" style="color: #FFFFFF;">Today</span></div>
+      <div class="day"><svg width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="#5A4A2A"></circle><circle cx="12" cy="12" r="4.5" fill="none" stroke="rgba(0,0,0,.35)" stroke-width="2"></circle></svg><span>+15</span><span class="d">Day 4</span></div>
+      <div class="day"><svg width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="#5A4A2A"></circle><circle cx="12" cy="12" r="4.5" fill="none" stroke="rgba(0,0,0,.35)" stroke-width="2"></circle></svg><span>+20</span><span class="d">Day 5</span></div>
+      <div class="day"><svg width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="#5A4A2A"></circle><circle cx="12" cy="12" r="4.5" fill="none" stroke="rgba(0,0,0,.35)" stroke-width="2"></circle></svg><span>+20</span><span class="d">Day 6</span></div>
+      <div class="day"><svg class="ico" style="width: 16px; height: 16px; color: {{accent}};" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4" rx="1"></rect><path d="M5 12v8h14v-8M12 8v12M12 8c-2-3-6-3-6-1s3 2 6 1zM12 8c2-3 6-3 6-1s-3 2-6 1z"></path></svg><span>+50</span><span class="d">Day 7</span></div>
+    </div>
+    <div style="height: 48px; border-radius: 12px; background: {{accent}}; color: #FFFFFF; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 600; font-size: 15px;">
+      <span>Check in · +15 coins</span>
+    </div>
+  </div>
+
+  <div style="display: flex; align-items: center; justify-content: space-between; padding: 22px 20px 0 20px; flex: none;">
+    <div class="display" style="font-size: 17px; font-weight: 700;">Tasks</div>
+    <div style="font-size: 12px; color: #A59DC6;">Resets in 9 h</div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 8px; padding: 12px 20px 0 20px; flex: none;">
+    <div class="task">
+      <div class="i"><svg class="ico" style="width: 18px; height: 18px;" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M10 9l5 3-5 3z"></path></svg></div>
+      <div style="display: flex; flex-direction: column; gap: 3px; flex: 1; min-width: 0;">
+        <div style="font-size: 14px; font-weight: 600;">Watch an ad</div>
+        <div style="font-size: 12px; color: #A59DC6;">0 of 5 today</div>
+      </div>
+      <div class="reward"><svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="#FFB43C"></circle><circle cx="12" cy="12" r="4.5" fill="none" stroke="rgba(0,0,0,.35)" stroke-width="2"></circle></svg><span>+10</span></div>
+      <div class="btn" style="background: {{accent}}; color: #FFFFFF;">Go</div>
+    </div>
+    <div class="task">
+      <div class="i"><svg class="ico" style="width: 18px; height: 18px;" viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="2"></rect><path d="M11 9.5l4 2.5-4 2.5z"></path></svg></div>
+      <div style="display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 0;">
+        <div style="font-size: 14px; font-weight: 600;">Watch 3 episodes</div>
+        <div style="height: 4px; border-radius: 2px; background: rgba(255,255,255,.12);"><div style="width: 66%; height: 4px; border-radius: 2px; background: {{accent}};"></div></div>
+      </div>
+      <div class="reward"><svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="#FFB43C"></circle><circle cx="12" cy="12" r="4.5" fill="none" stroke="rgba(0,0,0,.35)" stroke-width="2"></circle></svg><span>+20</span></div>
+      <div class="btn" style="background: #1F1738; color: #A59DC6;">2 / 3</div>
+    </div>
+    <div class="task">
+      <div class="i"><svg class="ico" style="width: 18px; height: 18px;" viewBox="0 0 24 24"><path d="M6 4h12v17l-6-4-6 4z"></path></svg></div>
+      <div style="display: flex; flex-direction: column; gap: 3px; flex: 1; min-width: 0;">
+        <div style="font-size: 14px; font-weight: 600;">Add a series to My List</div>
+        <div style="font-size: 12px; color: #A59DC6;">Done today</div>
+      </div>
+      <div class="reward" style="color: #A59DC6;"><svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="#5A4A2A"></circle><circle cx="12" cy="12" r="4.5" fill="none" stroke="rgba(0,0,0,.35)" stroke-width="2"></circle></svg><span>+5</span></div>
+      <div class="btn" style="background: #1F1738; color: #A59DC6;">Claimed</div>
+    </div>
+    <div class="task">
+      <div class="i"><svg class="ico" style="width: 18px; height: 18px;" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"></circle><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"></path><path d="M18 8v6M15 11h6"></path></svg></div>
+      <div style="display: flex; flex-direction: column; gap: 3px; flex: 1; min-width: 0;">
+        <div style="font-size: 14px; font-weight: 600;">Invite a friend</div>
+        <div style="font-size: 12px; color: #A59DC6;">You both get coins when they join</div>
+      </div>
+      <div class="reward"><svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="#FFB43C"></circle><circle cx="12" cy="12" r="4.5" fill="none" stroke="rgba(0,0,0,.35)" stroke-width="2"></circle></svg><span>+100</span></div>
+      <div class="btn" style="background: rgba(255,255,255,.1); color: #F6F3FF;">Share</div>
+    </div>
+  </div>
+
+  <div style="padding: 18px 20px 0 20px; font-size: 13px; color: #A59DC6; text-align: center; flex: none;">Earned today: 25 coins</div>
+
+  <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 84px; box-sizing: border-box; padding: 8px 4px 22px 4px; background: rgba(12, 8, 24,.86); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid rgba(255,255,255,.06); display: flex; align-items: flex-start; justify-content: space-around;">
+    <div class="tab"><svg class="ico" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"></path></svg><div>Home</div></div>
+    <div class="tab"><svg class="ico" viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="2"></rect><path d="M11 9.5l4 2.5-4 2.5z"></path></svg><div>For You</div></div>
+    <div class="tab"><svg class="ico" viewBox="0 0 24 24"><path d="M6 4h12v17l-6-4-6 4z"></path></svg><div>My List</div></div>
+    <div class="tab" style="color: {{accent}}; font-weight: 600;"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4" rx="1"></rect><path d="M5 12v8h14v-8M12 8v12M12 8c-2-3-6-3-6-1s3 2 6 1zM12 8c2-3 6-3 6-1s-3 2-6 1z"></path></svg><div>Rewards</div></div>
+    <div class="tab"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"></path></svg><div>Me</div></div>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"accent":{"editor":"color","default":"#FF3D8A","options":["#FF3D8A","#8B5CF6","#22D3EE","#FFB43C"],"section":"Theme"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#FF3D8A' };
+  }
+}
+</script>
+</body>
+</html>

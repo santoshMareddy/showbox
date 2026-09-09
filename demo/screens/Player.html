@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=390">
+  <title>ShowBox Player</title>
+  </head>
+<body>
+
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;display=swap">
+  <style>
+    body { margin: 0; overflow: hidden; background: #000000; color: #F3EEE4; font-family: "Instrument Sans", "Segoe UI", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: #F2B441; } a:hover { color: #FFD16A; }
+    .display { font-family: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif; }
+    .ico { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+    .scene { background: radial-gradient(ellipse at 50% 40%, rgba(255,176,150,.42) 0%, rgba(255,176,150,0) 50%), radial-gradient(ellipse at 15% 100%, #7A2E52 0%, rgba(122,46,82,0) 60%), linear-gradient(180deg, #4A1F3A 0%, #12060F 100%); }
+    .rail { display: flex; flex-direction: column; align-items: center; gap: 4px; width: 52px; color: #FFFFFF; font-size: 12px; font-weight: 600; text-shadow: 0 1px 6px rgba(0,0,0,.5); }
+    .rail .ico { width: 30px; height: 30px; }
+    .circ { width: 40px; height: 40px; border-radius: 20px; background: rgba(0,0,0,.4); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); display: flex; align-items: center; justify-content: center; color: #FFFFFF; }
+  </style>
+
+<div class="scene" style="position: relative; width: 390px; height: 844px; overflow: hidden;">
+  <div style="position: absolute; left: 0; right: 0; top: 0; height: 150px; background: linear-gradient(180deg, rgba(0,0,0,.6) 0%, rgba(0,0,0,0) 100%);"></div>
+  <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 300px; background: linear-gradient(0deg, rgba(0,0,0,.85) 0%, rgba(0,0,0,0) 100%);"></div>
+
+  <div style="position: absolute; left: 16px; right: 16px; top: 54px; display: flex; align-items: center; justify-content: space-between;">
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <div class="circ"><svg class="ico" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"></path></svg></div>
+      <div style="display: flex; flex-direction: column; gap: 2px;">
+        <div class="display" style="font-size: 16px; font-weight: 700; color: #FFFFFF;">Married to the Heir</div>
+        <div style="font-size: 12px; color: #D9D2C5;">EP 12 of 80</div>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <div style="height: 32px; padding: 0 10px; border-radius: 16px; background: rgba(0,0,0,.4); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); font-size: 13px; font-weight: 600; color: #FFFFFF; display: flex; align-items: center;">1×</div>
+      <div class="circ"><svg class="ico" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5"></circle><circle cx="12" cy="12" r="1.5"></circle><circle cx="19" cy="12" r="1.5"></circle></svg></div>
+    </div>
+  </div>
+
+  <div style="position: absolute; right: 10px; bottom: 190px; display: flex; flex-direction: column; gap: 18px;">
+    <div class="rail"><svg class="ico" viewBox="0 0 24 24"><path d="M12 20.5s-7.5-4.6-9.4-8.9C1.2 8.2 3.6 5 6.9 5c1.9 0 3.5 1.1 5.1 2.8C13.6 6.1 15.2 5 17.1 5c3.3 0 5.7 3.2 4.3 6.6-1.9 4.3-9.4 8.9-9.4 8.9z"></path></svg><span>12.4K</span></div>
+    <div class="rail"><svg class="ico" viewBox="0 0 24 24"><path d="M6 4h12v17l-6-4-6 4z"></path></svg><span>Saved</span></div>
+    <div class="rail"><svg class="ico" viewBox="0 0 24 24"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"></path><path d="M12 15V3M8 7l4-4 4 4"></path></svg><span>Share</span></div>
+    <div class="rail"><svg class="ico" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"></path></svg><span>80 EP</span></div>
+  </div>
+
+  <div style="position: absolute; left: 16px; right: 80px; bottom: 74px; display: flex; flex-direction: column; gap: 10px;">
+    <div class="display" style="font-size: 17px; font-weight: 700; color: #FFFFFF;">EP 12 · The Second Contract</div>
+    <div style="font-size: 13px; line-height: 18px; color: #D9D2C5;">Elena finds the second contract, and it has her signature on it.</div>
+  </div>
+
+  <div style="position: absolute; left: 16px; right: 16px; bottom: 34px; display: flex; align-items: center; gap: 10px;">
+    <div style="font-size: 12px; font-weight: 500; font-variant-numeric: tabular-nums; color: #FFFFFF; width: 32px;">0:42</div>
+    <div style="position: relative; flex: 1; height: 24px; display: flex; align-items: center;">
+      <div style="position: absolute; left: 0; right: 0; height: 3px; border-radius: 2px; background: rgba(255,255,255,.28);"></div>
+      <div style="position: absolute; left: 0; width: 36%; height: 3px; border-radius: 2px; background: #F2B441;"></div>
+      <div style="position: absolute; left: calc(36% - 6px); width: 12px; height: 12px; border-radius: 6px; background: #F2B441; box-shadow: 0 0 0 4px rgba(0,0,0,.3);"></div>
+    </div>
+    <div style="font-size: 12px; font-weight: 500; font-variant-numeric: tabular-nums; color: #C9C2B5; width: 32px; text-align: right;">1:58</div>
+  </div>
+
+  <div style="position: absolute; left: 0; right: 0; bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 4px; font-size: 12px; color: #A39C8F;">
+    <svg class="ico" style="width: 14px; height: 14px;" viewBox="0 0 24 24"><path d="M6 15l6-6 6 6"></path></svg><span>Swipe up for EP 13</span>
+  </div>
+</div>
+
+</body>
+</html>

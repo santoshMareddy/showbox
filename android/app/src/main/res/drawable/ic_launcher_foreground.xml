@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="128"
+    android:viewportHeight="128">
+
+    <!-- Scaled and centred so the mark sits inside the adaptive-icon safe zone. -->
+    <group
+        android:pivotX="74"
+        android:pivotY="64"
+        android:scaleX="0.58"
+        android:scaleY="0.58"
+        android:translateX="-10">
+
+        <path android:pathData="M40,22a7,7,0,0,1,10.6,-6L108,58a7,7,0,0,1,0,12L50.6,112A7,7,0,0,1,40,106z"
+            android:fillColor="#FFFFFFFF" />
+
+        <path android:pathData="M47,40a5,5,0,1,0,10,0a5,5,0,1,0,-10,0z" android:fillColor="#FF12082A" />
+        <path android:pathData="M47,64a5,5,0,1,0,10,0a5,5,0,1,0,-10,0z" android:fillColor="#FF12082A" />
+        <path android:pathData="M47,88a5,5,0,1,0,10,0a5,5,0,1,0,-10,0z" android:fillColor="#FF12082A" />
+    </group>
+</vector>

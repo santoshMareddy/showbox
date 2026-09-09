@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;display=swap">
+  <style>
+    body { margin: 0; overflow: hidden; background: #0C0818; color: #F6F3FF; font-family: "Instrument Sans", "Segoe UI", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: #FF3D8A; } a:hover { color: #FFD16A; }
+    .display { font-family: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif; }
+    .ico { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+    .pack { position: relative; display: flex; flex-direction: column; gap: 4px; padding: 14px; border-radius: 14px; background: #1F1738; border: 1px solid rgba(255,255,255,0); box-sizing: border-box; }
+    .pack .price { margin-top: 8px; height: 30px; border-radius: 15px; background: rgba(255,255,255,.1); font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+    .bonus { position: absolute; right: 10px; top: 10px; height: 20px; padding: 0 7px; border-radius: 6px; background: rgba(255,255,255,.1); font-size: 11px; font-weight: 600; color: #F6F3FF; display: flex; align-items: center; }
+    .row { display: flex; align-items: center; gap: 12px; height: 48px; }
+    .row .i { width: 32px; height: 32px; border-radius: 16px; background: #1F1738; display: flex; align-items: center; justify-content: center; color: #D9D3EE; }
+  </style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; overflow: hidden; background: #0C0818; display: flex; flex-direction: column;">
+
+  <div style="display: flex; align-items: center; justify-content: space-between; padding: 54px 12px 0 12px; flex: none;">
+    <div style="display: flex; align-items: center; gap: 4px;">
+      <div style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; color: #F6F3FF;"><svg class="ico" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"></path></svg></div>
+      <div class="display" style="font-size: 22px; font-weight: 800; letter-spacing: -0.02em;">Wallet</div>
+    </div>
+    <div style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; color: #F6F3FF;"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"></circle><path d="M12 8v4l3 2"></path></svg></div>
+  </div>
+
+  <div style="margin: 14px 20px 0 20px; padding: 18px; border-radius: 16px; background: #161029; border: 1px solid rgba(255,255,255,.08); display: flex; flex-direction: column; gap: 10px; flex: none;">
+    <div style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: #A59DC6;">
+      <svg width="22" height="22" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="#FFB43C"></circle><circle cx="12" cy="12" r="4.5" fill="none" stroke="rgba(0,0,0,.35)" stroke-width="2"></circle></svg><span>Balance</span>
+    </div>
+    <div style="display: flex; align-items: baseline; gap: 8px;">
+      <div class="display" style="font-size: 40px; font-weight: 800; line-height: 1; letter-spacing: -0.03em;">1,250</div>
+      <div style="font-size: 15px; color: #A59DC6;">coins</div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #A59DC6;">
+      <div style="width: 6px; height: 6px; border-radius: 3px; background: {{accent}};"></div><span>80 bonus coins expire in 3 days</span>
+    </div>
+  </div>
+
+  <div style="display: flex; align-items: center; justify-content: space-between; padding: 22px 20px 0 20px; flex: none;">
+    <div class="display" style="font-size: 17px; font-weight: 700;">Top up</div>
+    <div style="font-size: 13px; color: #A59DC6;">Restore purchases</div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; padding: 12px 20px 0 20px; flex: none;">
+    <div class="pack">
+      <div class="display" style="font-size: 22px; font-weight: 800; line-height: 1;">500</div>
+      <div style="font-size: 12px; color: #A59DC6;">coins</div>
+      <div class="price">$4.99</div>
+    </div>
+    <div class="pack">
+      <div class="bonus">+10%</div>
+      <div class="display" style="font-size: 22px; font-weight: 800; line-height: 1;">1,200</div>
+      <div style="font-size: 12px; color: #A59DC6;">1,090 + 110 bonus</div>
+      <div class="price">$9.99</div>
+    </div>
+    <div class="pack" style="border-color: {{accent}};">
+      <div class="bonus" style="background: {{accent}}; color: #FFFFFF;">+20% · Popular</div>
+      <div class="display" style="font-size: 22px; font-weight: 800; line-height: 1;">2,500</div>
+      <div style="font-size: 12px; color: #A59DC6;">2,080 + 420 bonus</div>
+      <div class="price" style="background: {{accent}}; color: #FFFFFF;">$19.99</div>
+    </div>
+    <div class="pack">
+      <div class="bonus">+35%</div>
+      <div class="display" style="font-size: 22px; font-weight: 800; line-height: 1;">6,000</div>
+      <div style="font-size: 12px; color: #A59DC6;">4,440 + 1,560 bonus</div>
+      <div class="price">$49.99</div>
+    </div>
+  </div>
+
+  <div style="margin: 14px 20px 0 20px; padding: 14px; border-radius: 14px; background: linear-gradient(135deg, #2A2010 0%, #161029 100%); border: 1px solid rgba(255, 61, 138,.35); display: flex; align-items: center; gap: 12px; flex: none;">
+    <div style="width: 36px; height: 36px; border-radius: 18px; background: rgba(255, 61, 138,.16); display: flex; align-items: center; justify-content: center; color: {{accent}};"><svg class="ico" style="width: 20px; height: 20px;" viewBox="0 0 24 24"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"></path></svg></div>
+    <div style="display: flex; flex-direction: column; gap: 2px; flex: 1;">
+      <div style="font-size: 15px; font-weight: 700; color: {{accent}};">Go VIP</div>
+      <div style="font-size: 12px; color: #A59DC6;">Every episode unlocked, no ads. From $9.99 a month.</div>
+    </div>
+    <svg class="ico" style="width: 18px; height: 18px; color: #A59DC6;" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></svg>
+  </div>
+
+  <div style="display: flex; flex-direction: column; padding: 18px 20px 0 20px; flex: none;">
+    <div class="display" style="font-size: 17px; font-weight: 700; height: 30px;">Recent</div>
+    <div class="row">
+      <div class="i"><svg class="ico" style="width: 18px; height: 18px;" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></svg></div>
+      <div style="display: flex; flex-direction: column; gap: 2px; flex: 1;"><div style="font-size: 14px; font-weight: 500;">Top-up · 1,200 coins</div><div style="font-size: 12px; color: #A59DC6;">Today, 09:12</div></div>
+      <div style="font-size: 14px; font-weight: 600; color: {{accent}};">+1,200</div>
+    </div>
+    <div class="row">
+      <div class="i"><svg class="ico" style="width: 18px; height: 18px;" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg></div>
+      <div style="display: flex; flex-direction: column; gap: 2px; flex: 1;"><div style="font-size: 14px; font-weight: 500;">Unlocked EP 12 · Married to the Heir</div><div style="font-size: 12px; color: #A59DC6;">Yesterday</div></div>
+      <div style="font-size: 14px; font-weight: 600; color: #D9D3EE;">−50</div>
+    </div>
+    <div class="row">
+      <div class="i"><svg class="ico" style="width: 18px; height: 18px;" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"></path></svg></div>
+      <div style="display: flex; flex-direction: column; gap: 2px; flex: 1;"><div style="font-size: 14px; font-weight: 500;">Daily check-in</div><div style="font-size: 12px; color: #A59DC6;">Yesterday</div></div>
+      <div style="font-size: 14px; font-weight: 600; color: {{accent}};">+10</div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"accent":{"editor":"color","default":"#FF3D8A","options":["#FF3D8A","#8B5CF6","#22D3EE","#FFB43C"],"section":"Theme"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#FF3D8A' };
+  }
+}
+</script>
+</body>
+</html>

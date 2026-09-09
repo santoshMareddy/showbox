@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;display=swap">
+  <style>
+    body { margin: 0; overflow: hidden; background: #000000; color: #F6F3FF; font-family: "Instrument Sans", "Segoe UI", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: #FF3D8A; } a:hover { color: #FFD16A; }
+    .display { font-family: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif; }
+    .ico { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+    .scene { background: radial-gradient(circle at 50% 34%, #FFE9DF 0%, #FFE9DF 13%, rgba(255,233,223,0) 14%), radial-gradient(ellipse at 50% 60%, rgba(255,200,210,.25) 0%, rgba(255,200,210,0) 55%), linear-gradient(180deg, #C9788A 0%, #3A1A2A 60%, #14080E 100%); }
+    .rail { display: flex; flex-direction: column; align-items: center; gap: 4px; width: 52px; color: #FFFFFF; font-size: 12px; font-weight: 600; text-shadow: 0 1px 6px rgba(0,0,0,.5); }
+    .rail .ico { width: 30px; height: 30px; }
+    .chip { height: 22px; padding: 0 8px; border-radius: 6px; background: rgba(255,255,255,.16); font-size: 11px; font-weight: 600; color: #FFFFFF; display: flex; align-items: center; }
+    .tab { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; width: 68px; height: 50px; color: #B8B1A4; font-size: 11px; font-weight: 500; }
+  </style>
+</helmet>
+<div class="scene" style="position: relative; width: 390px; height: 844px; overflow: hidden;">
+  <div style="position: absolute; left: 0; right: 0; top: 0; height: 150px; background: linear-gradient(180deg, rgba(0,0,0,.5) 0%, rgba(0,0,0,0) 100%);"></div>
+  <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 380px; background: linear-gradient(0deg, rgba(0,0,0,.9) 0%, rgba(0,0,0,0) 100%);"></div>
+
+  <div style="position: absolute; left: 20px; right: 16px; top: 54px; display: flex; align-items: center; justify-content: space-between;">
+    <div class="display" style="font-size: 20px; font-weight: 800; color: #FFFFFF; letter-spacing: -0.02em;">For You</div>
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <div style="height: 36px; padding: 0 6px 0 8px; border-radius: 18px; background: rgba(0,0,0,.4); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: #FFFFFF;">
+        <svg width="18" height="18" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="#FFB43C"></circle><circle cx="12" cy="12" r="4.5" fill="none" stroke="rgba(0,0,0,.35)" stroke-width="2"></circle></svg>
+        <span>1,250</span>
+        <div style="width: 22px; height: 22px; border-radius: 11px; background: rgba(255,255,255,.18); display: flex; align-items: center; justify-content: center;"><svg class="ico" style="width: 14px; height: 14px; stroke-width: 2.2;" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></svg></div>
+      </div>
+      <div style="width: 40px; height: 40px; border-radius: 20px; background: rgba(0,0,0,.4); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); display: flex; align-items: center; justify-content: center; color: #FFFFFF;"><svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg></div>
+    </div>
+  </div>
+
+  <div style="position: absolute; right: 10px; bottom: 214px; display: flex; flex-direction: column; gap: 18px;">
+    <div class="rail"><svg class="ico" viewBox="0 0 24 24"><path d="M12 20.5s-7.5-4.6-9.4-8.9C1.2 8.2 3.6 5 6.9 5c1.9 0 3.5 1.1 5.1 2.8C13.6 6.1 15.2 5 17.1 5c3.3 0 5.7 3.2 4.3 6.6-1.9 4.3-9.4 8.9-9.4 8.9z"></path></svg><span>9.8K</span></div>
+    <div class="rail"><svg class="ico" viewBox="0 0 24 24"><path d="M6 4h12v17l-6-4-6 4z"></path></svg><span>2.2K</span></div>
+    <div class="rail"><svg class="ico" viewBox="0 0 24 24"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"></path><path d="M12 15V3M8 7l4-4 4 4"></path></svg><span>540</span></div>
+  </div>
+
+  <div style="position: absolute; left: 16px; right: 80px; bottom: 108px; display: flex; flex-direction: column; gap: 8px;">
+    <div style="display: flex; gap: 6px;"><div class="chip" style="background: {{accent}}; color: #FFFFFF;">Romance</div><div class="chip">60 episodes</div><div class="chip">EP 1</div></div>
+    <div class="display" style="font-size: 24px; font-weight: 800; line-height: 1.02; letter-spacing: -0.02em; color: #FFFFFF;">The Substitute Bride</div>
+    <div style="font-size: 13px; line-height: 18px; color: #D9D3EE;">Mara takes her sister's place at the altar for one night. The groom already knows.</div>
+    <div style="display: flex; align-items: center; gap: 8px; margin-top: 4px; height: 40px; padding: 0 14px 0 12px; border-radius: 10px; background: rgba(255,255,255,.14); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); align-self: flex-start; font-size: 13px; font-weight: 600; color: #FFFFFF;">
+      <svg class="ico" style="width: 18px; height: 18px;" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"></path></svg><span>Watch full series</span><svg class="ico" style="width: 16px; height: 16px;" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></svg>
+    </div>
+  </div>
+
+  <div style="position: absolute; left: 0; right: 0; bottom: 84px; height: 3px; background: rgba(255,255,255,.2);"><div style="width: 22%; height: 3px; background: {{accent}};"></div></div>
+
+  <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 84px; box-sizing: border-box; padding: 8px 4px 22px 4px; background: rgba(0,0,0,.45); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid rgba(255,255,255,.08); display: flex; align-items: flex-start; justify-content: space-around;">
+    <div class="tab"><svg class="ico" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"></path></svg><div>Home</div></div>
+    <div class="tab" style="color: #FFFFFF; font-weight: 600;"><svg class="ico" viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="2"></rect><path d="M11 9.5l4 2.5-4 2.5z"></path></svg><div>For You</div></div>
+    <div class="tab"><svg class="ico" viewBox="0 0 24 24"><path d="M6 4h12v17l-6-4-6 4z"></path></svg><div>My List</div></div>
+    <div class="tab"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4" rx="1"></rect><path d="M5 12v8h14v-8M12 8v12M12 8c-2-3-6-3-6-1s3 2 6 1zM12 8c2-3 6-3 6-1s-3 2-6 1z"></path></svg><div>Rewards</div></div>
+    <div class="tab"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"></path></svg><div>Me</div></div>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"accent":{"editor":"color","default":"#FF3D8A","options":["#FF3D8A","#8B5CF6","#22D3EE","#FFB43C"],"section":"Theme"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#FF3D8A' };
+  }
+}
+</script>
+</body>
+</html>

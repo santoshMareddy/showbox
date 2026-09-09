@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#050403">
+<title>ShowBox demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+  html, body { margin: 0; height: 100%; background: #050403; color: #F3EEE4; font-family: "Instrument Sans", "Segoe UI", system-ui, sans-serif; overflow: hidden; -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent; }
+  #stage { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
+  #phone { position: relative; width: 390px; height: 844px; border-radius: 44px; overflow: hidden; background: #0B0A08; box-shadow: 0 30px 80px rgba(0,0,0,.65), 0 0 0 10px #16130F, 0 0 0 12px #2A2620; transform-origin: center center; }
+  body.fill #phone { border-radius: 0; box-shadow: none; }
+  .screen { position: absolute; left: 0; top: 0; width: 390px; height: 844px; border: 0; background: #0B0A08; opacity: 0; transform: translateX(100%); pointer-events: none; will-change: transform, opacity; }
+  .screen.anim { transition: transform 340ms cubic-bezier(.32,.72,0,1), opacity 220ms ease; }
+  #hit { position: absolute; inset: 0; z-index: 10; touch-action: none; }
+  .hs { position: absolute; cursor: pointer; }
+  body.debug .hs { outline: 1px dashed rgba(242,180,65,.8); background: rgba(242,180,65,.10); }
+  #toast { position: absolute; left: 50%; bottom: 108px; z-index: 30; transform: translate(-50%, 16px); opacity: 0; padding: 10px 16px; border-radius: 12px; background: rgba(30,27,22,.97); color: #F3EEE4; font-size: 13px; font-weight: 600; white-space: nowrap; transition: transform 220ms ease, opacity 220ms ease; pointer-events: none; box-shadow: 0 8px 24px rgba(0,0,0,.45); display: flex; gap: 8px; align-items: center; }
+  #toast.show { opacity: 1; transform: translate(-50%, 0); }
+  #toast .coin { width: 14px; height: 14px; border-radius: 7px; background: #F2B441; box-shadow: inset 0 0 0 3px rgba(0,0,0,.35); flex: none; }
+  #panel { position: fixed; right: 20px; top: 20px; z-index: 50; width: 210px; display: flex; flex-direction: column; gap: 6px; font-size: 13px; }
+  #panel .brand { font-family: "Bricolage Grotesque", system-ui, sans-serif; font-weight: 800; font-size: 20px; letter-spacing: -0.02em; margin-bottom: 4px; }
+  #panel .brand span { color: #F2B441; }
+  #panel .cap { font-size: 12px; color: #8C8578; line-height: 16px; margin-bottom: 6px; }
+  #panel .lbl { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: #6E6858; font-weight: 600; margin-top: 8px; }
+  #panel button, #panel a { appearance: none; border: 0; text-align: left; font: inherit; color: #D9D2C5; background: #15130F; border: 1px solid rgba(255,255,255,.06); border-radius: 10px; padding: 8px 10px; cursor: pointer; text-decoration: none; display: block; }
+  #panel button:hover, #panel a:hover { background: #1E1B16; color: #F3EEE4; }
+  #panel button.on { color: #F2B441; border-color: rgba(242,180,65,.4); }
+  #menuBtn { position: fixed; right: 12px; top: 12px; z-index: 60; width: 40px; height: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,.12); background: rgba(21,19,15,.9); color: #F3EEE4; display: none; align-items: center; justify-content: center; cursor: pointer; }
+  @media (max-width: 760px) { #panel { display: none; } #panel.open { display: flex; right: 12px; top: 60px; background: rgba(5,4,3,.96); padding: 12px; border-radius: 14px; border: 1px solid rgba(255,255,255,.08); } #menuBtn { display: flex; } }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="phone">
+    <div id="hit"></div>
+    <div id="toast"><span class="coin" hidden></span><span id="toastText"></span></div>
+  </div>
+</div>
+
+<div id="menuBtn" title="Screens"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h10"></path></svg></div>
+<div id="panel">
+  <div class="brand">Show<span>Box</span> demo</div>
+  <div class="cap">Clickable prototype of the design. Tap cards, tabs and buttons. Swipe up in the player, swipe right from the left edge to go back.</div>
+  <div class="lbl">Screens</div>
+  <div id="screenList"></div>
+  <div class="lbl">More</div>
+  <a href="canvas.html" target="_blank" rel="noopener">Design canvas (read-only)</a>
+  <button id="dbg" type="button">Show tap areas</button>
+</div>
+
+<script>
+(() => {
+  const ACCENT = '#F2B441';
+  const SCREENS = {
+    Main:         { title: 'Home',            kind: 'tab' },
+    ForYou:       { title: 'For You',         kind: 'tab' },
+    MyList:       { title: 'My List',         kind: 'tab' },
+    Rewards:      { title: 'Rewards',         kind: 'tab' },
+    Me:           { title: 'Me',              kind: 'tab' },
+    Search:       { title: 'Search',          kind: 'push' },
+    Details:      { title: 'Series details',  kind: 'push' },
+    Player:       { title: 'Player',          kind: 'push' },
+    ShortsUnlock: { title: 'Unlock episode',  kind: 'sheet' },
+    Wallet:       { title: 'Wallet',          kind: 'push' },
+    Vip:          { title: 'VIP plans',       kind: 'push' },
+  };
+  const TABS = [['Main', 0], ['ForYou', 78], ['MyList', 156], ['Rewards', 234], ['Me', 312]];
+  const tabBar = () => TABS.map(([to, x]) => ({ x, y: 760, w: 78, h: 84, to }));
+  const H = {
+    Main: [
+      { x: 236, y: 58, w: 64, h: 36, to: 'Wallet' },
+      { x: 300, y: 54, w: 44, h: 44, to: 'Search' },
+      { x: 95, y: 152, w: 200, h: 285, to: 'Details' },
+      { x: 0, y: 174, w: 85, h: 225, to: 'Details' },
+      { x: 305, y: 174, w: 85, h: 225, to: 'Details' },
+      { x: 20, y: 450, w: 173, h: 44, to: 'Player' },
+      { x: 197, y: 450, w: 173, h: 44, toast: 'Added to My List' },
+      { x: 20, y: 548, w: 104, h: 156, to: 'Player' },
+      { x: 134, y: 548, w: 104, h: 156, to: 'Player' },
+      { x: 248, y: 548, w: 104, h: 156, to: 'Player' },
+      { x: 362, y: 548, w: 28, h: 156, to: 'Player' },
+      ...tabBar(),
+    ],
+    ForYou: [
+      { x: 236, y: 54, w: 70, h: 36, to: 'Wallet' },
+      { x: 334, y: 54, w: 40, h: 40, to: 'Search' },
+      { x: 328, y: 444, w: 52, h: 50, toast: 'Liked' },
+      { x: 328, y: 512, w: 52, h: 50, toast: 'Saved to My List' },
+      { x: 328, y: 580, w: 52, h: 50, toast: 'Share sheet (demo)' },
+      { x: 16, y: 696, w: 180, h: 40, to: 'Details' },
+      { x: 0, y: 110, w: 320, h: 320, toast: 'Paused · tap to play' },
+      ...tabBar(),
+    ],
+    MyList: [
+      { x: 326, y: 54, w: 44, h: 44, toast: 'Sort (demo)' },
+      { x: 20, y: 106, w: 350, h: 34, toast: 'Filter (demo)' },
+      { x: 20, y: 158, w: 350, h: 165, to: 'Details' },
+      { x: 20, y: 335, w: 350, h: 165, to: 'Details' },
+      { x: 20, y: 512, w: 350, h: 165, to: 'Details' },
+      ...tabBar(),
+    ],
+    Rewards: [
+      { x: 290, y: 58, w: 80, h: 32, to: 'Wallet' },
+      { x: 36, y: 230, w: 318, h: 48, action: 'checkin' },
+      { x: 280, y: 358, w: 90, h: 48, action: 'adtask' },
+      { x: 20, y: 422, w: 350, h: 64, toast: 'Watch one more episode to claim' },
+      { x: 20, y: 494, w: 350, h: 64, toast: 'Already claimed today' },
+      { x: 280, y: 574, w: 90, h: 48, toast: 'Invite link copied' },
+      ...tabBar(),
+    ],
+    Me: [
+      { x: 20, y: 54, w: 350, h: 64, toast: 'Sign in (demo)' },
+      { x: 20, y: 138, w: 350, h: 64, to: 'Vip' },
+      { x: 210, y: 237, w: 74, h: 36, to: 'Wallet' },
+      { x: 296, y: 237, w: 60, h: 36, to: 'Rewards' },
+      { x: 20, y: 314, w: 350, h: 54, to: 'MyList' },
+      { x: 20, y: 368, w: 350, h: 54, to: 'Wallet' },
+      { x: 20, y: 422, w: 350, h: 54, toast: 'Notifications (demo)' },
+      { x: 20, y: 476, w: 350, h: 54, toast: 'Settings (demo)' },
+      { x: 20, y: 530, w: 350, h: 54, toast: 'Help (demo)' },
+      ...tabBar(),
+    ],
+    Search: [
+      { x: 20, y: 54, w: 44, h: 48, back: true },
+      { x: 20, y: 150, w: 350, h: 44, to: 'Details' },
+      { x: 20, y: 198, w: 350, h: 44, to: 'Details' },
+      { x: 20, y: 246, w: 350, h: 44, to: 'Details' },
+      { x: 20, y: 346, w: 350, h: 358, to: 'Details' },
+      { x: 20, y: 754, w: 350, h: 32, to: 'Details' },
+    ],
+    Details: [
+      { x: 16, y: 54, w: 40, h: 40, back: true },
+      { x: 334, y: 54, w: 40, h: 40, toast: 'Share sheet (demo)' },
+      { x: 20, y: 346, w: 350, h: 52, to: 'Player' },
+      { x: 32, y: 410, w: 72, h: 52, toast: 'Added to My List' },
+      { x: 117, y: 410, w: 72, h: 52, toast: 'Share sheet (demo)' },
+      { x: 201, y: 410, w: 72, h: 52, toast: 'Thanks for rating' },
+      { x: 286, y: 410, w: 72, h: 52, to: 'Vip' },
+      { x: 90, y: 526, w: 120, h: 32, toast: 'More like this (demo)' },
+      { x: 96, y: 570, w: 150, h: 32, toast: 'Episodes 31 to 80 (demo)' },
+      { x: 20, y: 614, w: 350, h: 48, to: 'Player' },
+      { x: 20, y: 670, w: 350, h: 48, to: 'Player' },
+      { x: 20, y: 726, w: 350, h: 48, to: 'ShortsUnlock' },
+    ],
+    Player: [
+      { x: 16, y: 54, w: 40, h: 40, back: true },
+      { x: 290, y: 58, w: 40, h: 32, toast: 'Speed 1.5×' },
+      { x: 334, y: 54, w: 40, h: 40, toast: 'More options (demo)' },
+      { x: 328, y: 400, w: 52, h: 50, toast: 'Liked' },
+      { x: 328, y: 468, w: 52, h: 50, toast: 'Saved to My List' },
+      { x: 328, y: 536, w: 52, h: 50, toast: 'Share sheet (demo)' },
+      { x: 328, y: 604, w: 52, h: 50, to: 'Details' },
+      { x: 60, y: 120, w: 260, h: 270, toast: 'Paused · tap to play' },
+      { x: 0, y: 796, w: 390, h: 48, to: 'ShortsUnlock' },
+    ],
+    ShortsUnlock: [
+      { x: 0, y: 0, w: 390, h: 426, back: true },
+      { x: 330, y: 452, w: 44, h: 44, back: true },
+      { x: 280, y: 508, w: 90, h: 58, to: 'Wallet' },
+      { x: 304, y: 618, w: 66, h: 34, toast: 'Auto-unlock off' },
+      { x: 20, y: 666, w: 350, h: 52, action: 'unlock' },
+      { x: 20, y: 732, w: 350, h: 48, action: 'ad' },
+      { x: 100, y: 788, w: 190, h: 28, to: 'Vip' },
+    ],
+    Wallet: [
+      { x: 12, y: 54, w: 44, h: 44, back: true },
+      { x: 334, y: 54, w: 44, h: 44, toast: 'History (demo)' },
+      { x: 250, y: 266, w: 120, h: 26, toast: 'Nothing to restore' },
+      { x: 20, y: 302, w: 170, h: 108, action: 'buy', coins: '500' },
+      { x: 200, y: 302, w: 170, h: 108, action: 'buy', coins: '1,200' },
+      { x: 20, y: 420, w: 170, h: 108, action: 'buy', coins: '2,500' },
+      { x: 200, y: 420, w: 170, h: 108, action: 'buy', coins: '6,000' },
+      { x: 20, y: 542, w: 350, h: 64, to: 'Vip' },
+    ],
+    Vip: [
+      { x: 12, y: 54, w: 44, h: 44, back: true },
+      { x: 20, y: 398, w: 350, h: 65, toast: 'Weekly selected' },
+      { x: 20, y: 473, w: 350, h: 65, toast: 'Monthly selected' },
+      { x: 20, y: 548, w: 350, h: 65, toast: 'Yearly selected' },
+      { x: 20, y: 631, w: 350, h: 52, action: 'vip' },
+    ],
+  };
+
+  const phone = document.getElementById('phone');
+  const hit = document.getElementById('hit');
+  const toastEl = document.getElementById('toast');
+  const toastText = document.getElementById('toastText');
+  const toastCoin = toastEl.querySelector('.coin');
+  const frames = {};
+  let stack = ['Main'];
+  let busy = false;
+  let toastTimer = 0;
+
+  function frame(name) {
+    if (frames[name]) return frames[name];
+    const f = document.createElement('iframe');
+    f.className = 'screen';
+    f.title = SCREENS[name].title;
+    f.src = 'screens/' + name + '.html';
+    f.setAttribute('tabindex', '-1');
+    phone.insertBefore(f, hit);
+    frames[name] = f;
+    return f;
+  }
+  function setNow(f, transform, opacity, z) { f.classList.remove('anim'); f.style.transform = transform; f.style.opacity = opacity; f.style.zIndex = z; void f.offsetWidth; }
+  function setAnim(f, transform, opacity, z) { f.classList.add('anim'); f.style.transform = transform; f.style.opacity = opacity; f.style.zIndex = z; }
+  const hide = (f) => setNow(f, 'translateX(100%)', 0, 0);
+
+  function current() { return stack[stack.length - 1]; }
+
+  function go(name) {
+    if (busy || !SCREENS[name]) return;
+    const from = current();
+    if (name === from) return;
+    const kind = SCREENS[name].kind;
+    // Going to a screen that is already in the stack pops back to it.
+    const idx = stack.indexOf(name);
+    if (idx >= 0 && kind !== 'tab') { popTo(idx); return; }
+    const fIn = frame(name), fOut = frames[from];
+    busy = true;
+    if (kind === 'tab') {
+      stack = [name];
+      setNow(fIn, 'translateX(0)', 0, 3);
+      setAnim(fIn, 'translateX(0)', 1, 3);
+      setAnim(fOut, 'translateX(0)', 0, 2);
+      setTimeout(() => { hide(fOut); fIn.style.zIndex = 2; busy = false; }, 240);
+    } else if (kind === 'sheet') {
+      stack.push(name);
+      setNow(fIn, 'translateY(24px)', 0, 3);
+      setAnim(fIn, 'translateY(0)', 1, 3);
+      setTimeout(() => { busy = false; }, 240);
+    } else {
+      stack.push(name);
+      setNow(fIn, 'translateX(100%)', 1, 3);
+      setAnim(fIn, 'translateX(0)', 1, 3);
+      setAnim(fOut, 'translateX(-24%)', 0.6, 2);
+      setTimeout(() => { fIn.style.zIndex = 2; busy = false; }, 360);
+    }
+    renderList();
+  }
+
+  function popTo(idx) {
+    if (busy || stack.length < 2) return;
+    const from = current();
+    const target = stack[idx];
+    const fOut = frames[from], fIn = frame(target);
+    busy = true;
+    if (SCREENS[from].kind === 'sheet') {
+      setNow(fIn, 'translateX(0)', 1, 2);
+      setAnim(fOut, 'translateY(24px)', 0, 3);
+      setTimeout(() => { hide(fOut); busy = false; }, 240);
+    } else {
+      setNow(fIn, 'translateX(-24%)', 0.6, 2);
+      setAnim(fIn, 'translateX(0)', 1, 2);
+      setAnim(fOut, 'translateX(100%)', 1, 3);
+      setTimeout(() => { hide(fOut); busy = false; }, 360);
+    }
+    // drop everything above the target, hide intermediate screens
+    stack.slice(idx + 1, -1).forEach((n) => frames[n] && hide(frames[n]));
+    stack = stack.slice(0, idx + 1);
+    renderList();
+  }
+  function back() { if (stack.length > 1) popTo(stack.length - 2); }
+
+  function toast(text, coin) {
+    toastText.textContent = text;
+    toastCoin.hidden = !coin;
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toastEl.classList.remove('show'), 1900);
+  }
+
+  function act(h) {
+    switch (h.action) {
+      case 'unlock': back(); toast('EP 13 unlocked · 70 coins left', true); break;
+      case 'ad': back(); toast('Ad watched · EP 13 unlocked', true); break;
+      case 'buy': toast(`Purchased ${h.coins} coins (demo)`, true); break;
+      case 'vip': back(); toast('VIP trial started · every episode unlocked'); break;
+      case 'checkin': toast('+15 coins · day 3 checked in', true); break;
+      case 'adtask': toast('+10 coins for watching an ad', true); break;
+      default: break;
+    }
+  }
+
+  // Hotspots for the current screen
+  function renderHotspots() {
+    hit.innerHTML = '';
+    (H[current()] || []).forEach((h) => {
+      const d = document.createElement('div');
+      d.className = 'hs';
+      d.style.cssText = `left:${h.x}px;top:${h.y}px;width:${h.w}px;height:${h.h}px;`;
+      d.addEventListener('click', (e) => {
+        if (suppressClick) { e.preventDefault(); return; }
+        if (h.back) back();
+        else if (h.to) go(h.to);
+        else if (h.action) act(h);
+        else if (h.toast) toast(h.toast);
+        renderHotspots();
+      });
+      hit.appendChild(d);
+    });
+  }
+  const _go = go, _popTo = popTo;
+  go = (n) => { _go(n); setTimeout(renderHotspots, 0); };
+  popTo = (i) => { _popTo(i); setTimeout(renderHotspots, 0); };
+
+  // Gestures: swipe right from the left edge = back; swipe up in the player = next (locked) episode
+  let p0 = null, suppressClick = false;
+  hit.addEventListener('pointerdown', (e) => { p0 = { x: e.clientX, y: e.clientY, t: Date.now() }; suppressClick = false; });
+  hit.addEventListener('pointermove', (e) => { if (!p0) return; if (Math.hypot(e.clientX - p0.x, e.clientY - p0.y) > 10) suppressClick = true; });
+  hit.addEventListener('pointerup', (e) => {
+    if (!p0) return;
+    const s = scale();
+    const dx = (e.clientX - p0.x) / s, dy = (e.clientY - p0.y) / s;
+    const rect = phone.getBoundingClientRect();
+    const startX = (p0.x - rect.left) / s;
+    const cur = current();
+    if (dx > 70 && Math.abs(dy) < 60 && startX < 70 && SCREENS[cur].kind !== 'tab') { back(); }
+    else if (dy < -80 && Math.abs(dx) < 60) {
+      if (cur === 'Player') go('ShortsUnlock');
+      else if (cur === 'ForYou') toast('Next series (demo)');
+      else if (cur === 'ShortsUnlock') { /* sheet already open */ }
+    } else if (dy > 90 && Math.abs(dx) < 60 && cur === 'ShortsUnlock') { back(); }
+    p0 = null;
+    setTimeout(() => { suppressClick = false; }, 50);
+  });
+  hit.addEventListener('pointercancel', () => { p0 = null; });
+
+  // Fit the phone to the viewport
+  let _scale = 1;
+  function scale() { return _scale; }
+  function fit() {
+    const w = window.innerWidth, h = window.innerHeight;
+    const narrow = w < 760;
+    document.body.classList.toggle('fill', narrow);
+    const pad = narrow ? 0 : 48;
+    _scale = Math.min((w - pad - (narrow ? 0 : 240)) / 390, (h - pad) / 844, narrow ? 10 : 1.15);
+    if (narrow) _scale = Math.min(w / 390, h / 844);
+    phone.style.transform = `scale(${_scale})`;
+  }
+  window.addEventListener('resize', fit);
+
+  // Screen list panel
+  const list = document.getElementById('screenList');
+  function renderList() {
+    list.innerHTML = '';
+    Object.keys(SCREENS).forEach((n) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = SCREENS[n].title;
+      if (n === current()) b.classList.add('on');
+      b.addEventListener('click', () => { jump(n); document.getElementById('panel').classList.remove('open'); });
+      list.appendChild(b);
+    });
+  }
+  function jump(n) {
+    if (n === current()) return;
+    if (SCREENS[n].kind === 'tab') { go(n); return; }
+    // deep-link style: rebuild a sensible stack
+    const base = { Search: ['Main'], Details: ['Main'], Player: ['Main', 'Details'], ShortsUnlock: ['Main', 'Details', 'Player'], Wallet: ['Me'], Vip: ['Me'] }[n] || ['Main'];
+    Object.values(frames).forEach(hide);
+    stack = base.slice();
+    base.forEach((s) => frame(s));
+    setNow(frame(current()), 'translateX(0)', 1, 2);
+    go(n);
+  }
+  document.getElementById('dbg').addEventListener('click', (e) => { document.body.classList.toggle('debug'); e.currentTarget.classList.toggle('on'); });
+  document.getElementById('menuBtn').addEventListener('click', () => document.getElementById('panel').classList.toggle('open'));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' || e.key === 'Backspace') back(); });
+
+  // Boot: show Home, warm the others
+  fit();
+  setNow(frame('Main'), 'translateX(0)', 1, 2);
+  renderHotspots();
+  renderList();
+  Object.keys(SCREENS).forEach((n) => frame(n));
+  setTimeout(() => toast('Tap around · swipe up in the player'), 900);
+})();
+</script>
+</body>
+</html>

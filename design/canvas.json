@@ -1,0 +1,31 @@
+{
+  "pages": [
+    { "id": "page-1", "name": "Screens" },
+    { "id": "page-2", "name": "Coins and VIP" },
+    { "id": "page-3", "name": "Alternate directions" },
+    { "id": "page-4", "name": "System" }
+  ],
+  "artboards": [
+    { "file": "Me.dc.html", "x": 0, "y": 0, "w": 390, "h": 844, "title": "01 Me", "page": "page-1" },
+    { "file": "Main.dc.html", "x": 470, "y": 0, "w": 390, "h": 844, "title": "02 Home", "page": "page-1" },
+    { "file": "Search.dc.html", "x": 940, "y": 0, "w": 390, "h": 844, "title": "03 Search", "page": "page-1" },
+    { "file": "Details.dc.html", "x": 1410, "y": 0, "w": 390, "h": 844, "title": "04 Series details", "page": "page-1" },
+    { "file": "MyList.dc.html", "x": 1880, "y": 0, "w": 390, "h": 844, "title": "05 My List", "page": "page-1" },
+    { "file": "Player.dc.html", "x": 0, "y": 1010, "w": 390, "h": 844, "title": "06 Player (portrait)", "page": "page-1" },
+    { "file": "ForYou.dc.html", "x": 470, "y": 1010, "w": 390, "h": 844, "title": "07 For You feed", "page": "page-1" },
+    { "file": "ShortsUnlock.dc.html", "x": 940, "y": 1010, "w": 390, "h": 844, "title": "08 Unlock episode", "page": "page-1" },
+    { "file": "Wallet.dc.html", "x": 0, "y": 0, "w": 390, "h": 844, "title": "09 Wallet", "page": "page-2" },
+    { "file": "Rewards.dc.html", "x": 470, "y": 0, "w": 390, "h": 844, "title": "10 Earn coins", "page": "page-2" },
+    { "file": "Vip.dc.html", "x": 940, "y": 0, "w": 390, "h": 844, "title": "11 VIP plans", "page": "page-2" },
+    { "file": "DirectionLightEditorial.dc.html", "x": 0, "y": 0, "w": 390, "h": 844, "title": "Alt B: Light Editorial (low-fi)", "page": "page-3" },
+    { "file": "DirectionNeonGlass.dc.html", "x": 470, "y": 0, "w": 390, "h": 844, "title": "Alt C: Neon Glass (low-fi)", "page": "page-3" },
+    { "file": "Tokens.dc.html", "x": 0, "y": 0, "w": 960, "h": 900, "title": "Design tokens and components", "page": "page-4" }
+  ],
+  "annotations": [
+    { "id": "brief", "x": 0, "y": -280, "w": 760, "page": "page-1", "text": "ShowBox design v2 (2 Sep 2026): portrait short-drama app in the spirit of NetShort and DramaBox.\nDirection: Midnight Marquee. Warm near-black, one amber accent, Bricolage Grotesque + Instrument Sans.\nEvery video is vertical. Series run 60 to 90 short episodes; the first episodes are free, later ones cost coins or are free with VIP.\nHome hero follows Reference/Slide Animation.mp4: the focused card is full size and bright, neighbours are smaller and dimmed, and a glow behind the focused card takes that poster's colour.\nThe Accent chip above each screen swaps the accent across that screen. All titles, people and artwork are fictional placeholders." },
+    { "id": "player-row", "x": 1410, "y": 1010, "w": 520, "page": "page-1", "text": "Player and For You share one vertical pager: swipe up for the next episode, swipe sideways for the next series. Tap toggles play and pause; the next video is preloaded so a swipe starts instantly. Hitting a locked episode opens the Unlock sheet.\nThe canvas shows about ten screens at once; screens further away render when you pan to them." },
+    { "id": "coins", "x": 0, "y": -170, "w": 900, "page": "page-2", "text": "Coin economy: earn (check-in, ads, tasks, referrals), spend (50 coins per locked episode, auto-unlock optional), top up (packs with bonus tiers), or skip it all with VIP. Purchases are simulated in the demo. All prices and coin amounts are sample values." },
+    { "id": "alts", "x": 0, "y": -150, "w": 860, "page": "page-3", "text": "Alternate directions (low-fi, Home only)\nB Light Editorial: cream paper, serif, magazine pacing. Calmer and less app-like, but posters carry less weight on a light ground.\nC Neon Glass: navy, cyan + magenta, glass panels. Flashier, but blur and glow cost GPU time on mid-range Android." }
+  ],
+  "launch": { "view": "canvas", "page": "page-1" }
+}
