@@ -1,0 +1,162 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=390">
+  <title>ShowBox Main</title>
+  </head>
+<body>
+
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700;800&amp;family=Instrument+Sans:wght@400;500;600&amp;display=swap">
+  <style>
+    body { margin: 0; overflow: hidden; background: #0B0A08; color: #F3EEE4; font-family: "Instrument Sans", "Segoe UI", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: #F2B441; } a:hover { color: #FFD16A; }
+    .display { font-family: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif; }
+    .ico { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+    .poster { position: relative; overflow: hidden; border-radius: 10px; flex: none; }
+    .poster .t { position: absolute; left: 9px; right: 9px; bottom: 9px; font-family: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif; font-weight: 800; font-size: 12px; line-height: 1.05; letter-spacing: 0.03em; text-transform: uppercase; color: #FFFFFF; text-shadow: 0 1px 8px rgba(0,0,0,.65); }
+    .poster.light .t { color: #2B1A12; text-shadow: none; }
+    .meta { height: 20px; padding: 0 6px; border-radius: 5px; background: rgba(255,255,255,.16); font-size: 11px; font-weight: 500; color: #F3EEE4; display: flex; align-items: center; }
+    .tab { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; width: 68px; height: 50px; color: #8C8578; font-size: 11px; font-weight: 500; }
+    .art-heir { background: radial-gradient(ellipse at 50% 32%, rgba(255,176,150,.45) 0%, rgba(255,176,150,0) 52%), radial-gradient(ellipse at 15% 100%, #7A2E52 0%, rgba(122,46,82,0) 60%), linear-gradient(180deg, #4A1F3A 0%, #12060F 100%); }
+    .art-bride { background: radial-gradient(circle at 50% 34%, #FFE9DF 0%, #FFE9DF 15%, rgba(255,233,223,0) 16%), linear-gradient(180deg, #C9788A 0%, #3A1A2A 100%); }
+    .art-revenge { background: linear-gradient(160deg, rgba(255,40,60,.55) 0%, rgba(255,40,60,0) 50%), repeating-linear-gradient(135deg, rgba(255,255,255,.05) 0 2px, rgba(255,255,255,0) 2px 10px), linear-gradient(180deg, #2A0A10 0%, #0A0305 100%); }
+    .art-ceo { background: repeating-linear-gradient(90deg, rgba(0,0,0,.45) 0 5px, rgba(0,0,0,0) 5px 18px), radial-gradient(ellipse at 50% 100%, #F2B441 0%, rgba(242,180,65,0) 60%), linear-gradient(180deg, #101A3A 0%, #05070F 100%); }
+    .art-orbit { background: radial-gradient(circle at 50% 30%, rgba(255,255,255,0) 27%, rgba(255,255,255,.75) 27.8%, rgba(255,255,255,0) 29%), radial-gradient(circle at 50% 30%, #7C86FF 0%, rgba(124,134,255,0) 36%), linear-gradient(180deg, #161D52 0%, #05060F 100%); }
+    .art-crown { background: radial-gradient(circle at 50% 42%, #F2C14E 0%, #F2C14E 14%, rgba(242,193,78,0) 15%), linear-gradient(180deg, #3A1B5C 0%, #0B0716 100%); }
+    .art-ashfall { background: radial-gradient(ellipse at 25% 90%, #FF6A3D 0%, rgba(255,106,61,0) 55%), linear-gradient(200deg, #4A1410 0%, #120505 100%); }
+    .art-salt { background: linear-gradient(180deg, rgba(255,255,255,0) 58%, rgba(255,255,255,.22) 58.5%, rgba(255,255,255,0) 60%), linear-gradient(180deg, #0F5B66 0%, #031A1E 100%); }
+    .art-verdant { background: radial-gradient(circle at 75% 20%, #E6FF5C 0%, rgba(230,255,92,0) 40%), linear-gradient(160deg, #365A1E 0%, #0C160A 100%); }
+    .art-paper { background: radial-gradient(circle at 70% 30%, #FFF4E5 0%, #FFF4E5 18%, rgba(255,244,229,0) 19%), radial-gradient(circle at 30% 65%, #E9A27F 0%, #E9A27F 12%, rgba(233,162,127,0) 13%), linear-gradient(180deg, #F1D7BD 0%, #C98A6A 100%); }
+  </style>
+
+<div style="position: relative; width: 390px; height: 844px; overflow: hidden; background: #0B0A08; display: flex; flex-direction: column;">
+
+  <div style="display: flex; align-items: center; justify-content: space-between; padding: 54px 12px 6px 20px; flex: none;">
+    <div class="display" style="font-size: 24px; font-weight: 800; letter-spacing: -0.02em; line-height: 36px;">Show<span style="color: #F2B441;">Box</span></div>
+    <div style="display: flex; align-items: center; gap: 4px;">
+      <div style="height: 32px; padding: 0 10px 0 8px; margin-right: 4px; border-radius: 16px; background: #1E1B16; display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600;">
+        <svg width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="#F2B441"></circle><circle cx="12" cy="12" r="4.5" fill="none" stroke="rgba(0,0,0,.35)" stroke-width="2"></circle></svg><span>1,250</span>
+      </div>
+      <div style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; color: #F3EEE4;">
+        <svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: flex; gap: 8px; padding: 6px 20px 12px 20px; flex: none;">
+    <div style="height: 34px; padding: 0 14px; border-radius: 17px; background: #F3EEE4; color: #0B0A08; font-size: 13px; font-weight: 600; display: flex; align-items: center;">For you</div>
+    <div style="height: 34px; padding: 0 14px; border-radius: 17px; background: #1E1B16; color: #F3EEE4; font-size: 13px; font-weight: 500; display: flex; align-items: center;">Romance</div>
+    <div style="height: 34px; padding: 0 14px; border-radius: 17px; background: #1E1B16; color: #F3EEE4; font-size: 13px; font-weight: 500; display: flex; align-items: center;">Revenge</div>
+    <div style="height: 34px; padding: 0 14px; border-radius: 17px; background: #1E1B16; color: #F3EEE4; font-size: 13px; font-weight: 500; display: flex; align-items: center;">CEO</div>
+    <div style="height: 34px; padding: 0 14px; border-radius: 17px; background: #1E1B16; color: #F3EEE4; font-size: 13px; font-weight: 500; display: flex; align-items: center;">Fantasy</div>
+  </div>
+
+  <div style="position: relative; height: 292px; flex: none; overflow: hidden;">
+    <div style="position: absolute; left: 35px; top: -24px; width: 320px; height: 320px; border-radius: 160px; background: radial-gradient(circle, rgba(255,120,140,.55) 0%, rgba(255,120,140,0) 62%); filter: blur(18px);"></div>
+
+    <div class="poster art-bride" style="position: absolute; left: -65px; top: 26px; width: 150px; height: 225px; border-radius: 14px;">
+      <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,10,8,.4) 0%, rgba(11,10,8,.82) 100%);"></div>
+      <div style="position: absolute; right: 8px; top: 8px; display: flex; align-items: center; gap: 3px; font-size: 11px; font-weight: 600; color: #D9D2C5;"><span>7.9</span><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.7 5.9 21.1l1.4-6.8L2.2 9.6l6.9-.8z"></path></svg></div>
+      <div style="position: absolute; left: 10px; right: 10px; bottom: 10px; display: flex; flex-direction: column; gap: 6px;">
+        <div class="display" style="font-size: 14px; font-weight: 700; color: #D9D2C5;">The Substitute Bride</div>
+        <div style="display: flex; gap: 4px;"><div class="meta">60 EP</div><div class="meta">Romance</div></div>
+      </div>
+    </div>
+
+    <div class="poster art-revenge" style="position: absolute; left: 305px; top: 26px; width: 150px; height: 225px; border-radius: 14px;">
+      <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,10,8,.4) 0%, rgba(11,10,8,.82) 100%);"></div>
+      <div style="position: absolute; right: 8px; top: 8px; display: flex; align-items: center; gap: 3px; font-size: 11px; font-weight: 600; color: #D9D2C5;"><span>8.1</span><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.7 5.9 21.1l1.4-6.8L2.2 9.6l6.9-.8z"></path></svg></div>
+      <div style="position: absolute; left: 10px; right: 10px; bottom: 10px; display: flex; flex-direction: column; gap: 6px;">
+        <div class="display" style="font-size: 14px; font-weight: 700; color: #D9D2C5;">Her Silent Revenge</div>
+        <div style="display: flex; gap: 4px;"><div class="meta">90 EP</div><div class="meta">Revenge</div></div>
+      </div>
+    </div>
+
+    <div class="poster art-heir" style="position: absolute; left: 95px; top: 4px; width: 200px; height: 285px; border-radius: 16px; box-shadow: 0 18px 44px rgba(0,0,0,.6);">
+      <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,10,8,0) 48%, rgba(11,10,8,.88) 100%);"></div>
+      <div style="position: absolute; left: 10px; top: 10px; height: 22px; padding: 0 8px; border-radius: 6px; background: #F2B441; color: #14110A; font-size: 11px; font-weight: 700; letter-spacing: 0.02em; display: flex; align-items: center;">New episodes</div>
+      <div style="position: absolute; right: 10px; top: 10px; display: flex; align-items: center; gap: 4px; font-size: 14px; font-weight: 600; color: #FFFFFF;"><span>8.4</span><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.7 5.9 21.1l1.4-6.8L2.2 9.6l6.9-.8z"></path></svg></div>
+      <div style="position: absolute; left: 12px; right: 12px; bottom: 12px; display: flex; flex-direction: column; gap: 8px;">
+        <div class="display" style="font-size: 20px; font-weight: 800; line-height: 1; letter-spacing: -0.02em; color: #FFFFFF;">Married to the Heir</div>
+        <div style="display: flex; gap: 4px;"><div class="meta">80 EP</div><div class="meta">Romance</div><div class="meta">Ongoing</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: flex; gap: 8px; padding: 10px 20px 0 20px; flex: none;">
+    <div style="flex: 1; height: 44px; border-radius: 12px; background: #F2B441; color: #14110A; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 600; font-size: 15px;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg><span>Play EP 1</span>
+    </div>
+    <div style="flex: 1; height: 44px; border-radius: 12px; background: rgba(255,255,255,.14); color: #F3EEE4; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 600; font-size: 15px;">
+      <svg class="ico" style="width: 18px; height: 18px;" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></svg><span>My List</span>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 10px; padding-top: 22px; flex: none;">
+    <div style="display: flex; align-items: center; justify-content: space-between; padding: 0 20px;">
+      <div class="display" style="font-size: 17px; font-weight: 700;">Continue watching</div>
+      <div style="display: flex; align-items: center; gap: 2px; font-size: 13px; color: #A39C8F;"><span>See all</span><svg class="ico" style="width: 16px; height: 16px;" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></svg></div>
+    </div>
+    <div style="display: flex; gap: 10px; padding: 0 20px;">
+      <div style="display: flex; flex-direction: column; gap: 6px; flex: none; width: 104px;">
+        <div class="poster art-ceo" style="width: 104px; height: 156px;">
+          <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 60px; background: linear-gradient(0deg, rgba(0,0,0,.8) 0%, rgba(0,0,0,0) 100%);"></div>
+          <div style="position: absolute; left: 8px; bottom: 9px; font-size: 11px; font-weight: 700; color: #FFFFFF;">EP 7 / 60</div>
+          <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: rgba(255,255,255,.25);"><div style="width: 12%; height: 3px; background: #F2B441;"></div></div>
+        </div>
+        <div style="font-size: 13px; font-weight: 600; line-height: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Second Chance CEO</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px; flex: none; width: 104px;">
+        <div class="poster art-orbit" style="width: 104px; height: 156px;">
+          <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 60px; background: linear-gradient(0deg, rgba(0,0,0,.8) 0%, rgba(0,0,0,0) 100%);"></div>
+          <div style="position: absolute; left: 8px; bottom: 9px; font-size: 11px; font-weight: 700; color: #FFFFFF;">EP 24 / 72</div>
+          <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: rgba(255,255,255,.25);"><div style="width: 33%; height: 3px; background: #F2B441;"></div></div>
+        </div>
+        <div style="font-size: 13px; font-weight: 600; line-height: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Moonlit Contract</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px; flex: none; width: 104px;">
+        <div class="poster art-crown" style="width: 104px; height: 156px;">
+          <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 60px; background: linear-gradient(0deg, rgba(0,0,0,.8) 0%, rgba(0,0,0,0) 100%);"></div>
+          <div style="position: absolute; left: 8px; bottom: 9px; font-size: 11px; font-weight: 700; color: #FFFFFF;">EP 3 / 90</div>
+          <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: rgba(255,255,255,.25);"><div style="width: 4%; height: 3px; background: #F2B441;"></div></div>
+        </div>
+        <div style="font-size: 13px; font-weight: 600; line-height: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">The Forgotten Heiress</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px; flex: none; width: 104px;">
+        <div class="poster art-ashfall" style="width: 104px; height: 156px;">
+          <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 60px; background: linear-gradient(0deg, rgba(0,0,0,.8) 0%, rgba(0,0,0,0) 100%);"></div>
+          <div style="position: absolute; left: 8px; bottom: 9px; font-size: 11px; font-weight: 700; color: #FFFFFF;">EP 41 / 64</div>
+          <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: rgba(255,255,255,.25);"><div style="width: 64%; height: 3px; background: #F2B441;"></div></div>
+        </div>
+        <div style="font-size: 13px; font-weight: 600; line-height: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Runaway Heart</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 10px; padding-top: 18px; flex: none;">
+    <div style="display: flex; align-items: center; justify-content: space-between; padding: 0 20px;">
+      <div class="display" style="font-size: 17px; font-weight: 700;">Trending now</div>
+      <div style="display: flex; align-items: center; gap: 2px; font-size: 13px; color: #A39C8F;"><span>See all</span><svg class="ico" style="width: 16px; height: 16px;" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></svg></div>
+    </div>
+    <div style="display: flex; gap: 9px; padding: 0 20px;">
+      <div class="poster art-salt" style="width: 110px; height: 165px;"><div class="t">The Night Shift</div></div>
+      <div class="poster art-verdant" style="width: 110px; height: 165px;"><div class="t">Dragon's Bride</div></div>
+      <div class="poster art-paper light" style="width: 110px; height: 165px;"><div class="t">Paper Moons</div></div>
+      <div class="poster art-revenge" style="width: 110px; height: 165px;"><div class="t">Her Silent Revenge</div></div>
+    </div>
+  </div>
+
+  <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 84px; box-sizing: border-box; padding: 8px 4px 22px 4px; background: rgba(11,10,8,.86); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid rgba(255,255,255,.06); display: flex; align-items: flex-start; justify-content: space-around;">
+    <div class="tab" style="color: #F2B441; font-weight: 600;"><svg class="ico" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"></path></svg><div>Home</div></div>
+    <div class="tab"><svg class="ico" viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="2"></rect><path d="M11 9.5l4 2.5-4 2.5z"></path></svg><div>For You</div></div>
+    <div class="tab"><svg class="ico" viewBox="0 0 24 24"><path d="M6 4h12v17l-6-4-6 4z"></path></svg><div>My List</div></div>
+    <div class="tab"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4" rx="1"></rect><path d="M5 12v8h14v-8M12 8v12M12 8c-2-3-6-3-6-1s3 2 6 1zM12 8c2-3 6-3 6-1s-3 2-6 1z"></path></svg><div>Rewards</div></div>
+    <div class="tab"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"></path></svg><div>Me</div></div>
+  </div>
+
+</div>
+
+</body>
+</html>
