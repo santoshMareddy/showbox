@@ -1,0 +1,34 @@
+name: netshort
+description: "NetShort: a vertical short-drama OTT app (1-3 minute episodes)."
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.13.2
+
+dependencies:
+  dio: ^5.11.1
+  flutter:
+    sdk: flutter
+  flutter_riverpod: ^3.4.3
+  flutter_secure_storage: ^10.3.1
+  fpdart: ^1.2.0
+  go_router: ^18.0.1
+  hive_ce: ^2.19.3
+  hive_ce_flutter: ^2.3.4
+  json_annotation: ^4.12.0
+  media_kit: ^1.2.6
+  media_kit_libs_video: ^1.0.7
+  media_kit_video: ^2.0.1
+  riverpod_annotation: ^4.0.7
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  build_runner: ^2.16.1
+  riverpod_generator: ^4.0.9
+  hive_ce_generator: ^1.11.3
+
+flutter:
+  uses-material-design: true
