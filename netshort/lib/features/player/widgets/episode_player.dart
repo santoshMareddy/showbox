@@ -1,3 +1,5 @@
+import 'dart:ui' show ImageFilter;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:media_kit/media_kit.dart';
@@ -16,17 +18,22 @@ import '../services/preload_manager.dart';
 /// way, the episode thumbnail stands in. The active page also gets the
 /// tap-to-pause surface, the buffering spinner, the progress line and the
 /// playback-error banner; those live in a second [RepaintBoundary].
+///
+/// A locked episode never reaches the decoder: it shows the blurred
+/// thumbnail with a padlock, and a tap calls [onLockedTap] (the paywall).
 class EpisodePlayer extends ConsumerWidget {
   const EpisodePlayer({
     required this.episode,
     required this.index,
     required this.isActive,
+    this.onLockedTap,
     super.key,
   });
 
   final Episode episode;
   final int index;
   final bool isActive;
+  final VoidCallback? onLockedTap;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -34,6 +41,16 @@ class EpisodePlayer extends ConsumerWidget {
     return ListenableBuilder(
       listenable: manager,
       builder: (BuildContext context, Widget? _) {
+        if (episode.isLocked) {
+          return Stack(
+            fit: StackFit.expand,
+            children: <Widget>[
+              _Thumbnail(url: episode.thumbnailUrl),
+              _LockedCover(onTap: onLockedTap),
+            ],
+          );
+        }
+
         final player = manager.playerAt(index);
         final controller = manager.controllerAt(index);
         final hasDecoder = player != null && controller != null;
@@ -41,7 +58,7 @@ class EpisodePlayer extends ConsumerWidget {
         return Stack(
           fit: StackFit.expand,
           children: <Widget>[
-            _Thumbnail(url: episode.thumbnailUrl, dimmed: episode.isLocked),
+            _Thumbnail(url: episode.thumbnailUrl),
             if (hasDecoder)
               RepaintBoundary(
                 child: Video(
@@ -63,7 +80,6 @@ class EpisodePlayer extends ConsumerWidget {
                   onRetry: () => manager.retry(index),
                 ),
               ),
-            if (!hasDecoder && episode.isLocked) const _LockedNotice(),
           ],
         );
       },
@@ -72,10 +88,9 @@ class EpisodePlayer extends ConsumerWidget {
 }
 
 class _Thumbnail extends StatelessWidget {
-  const _Thumbnail({required this.url, required this.dimmed});
+  const _Thumbnail({required this.url});
 
   final String url;
-  final bool dimmed;
 
   @override
   Widget build(BuildContext context) {
@@ -84,8 +99,6 @@ class _Thumbnail extends StatelessWidget {
       fit: BoxFit.cover,
       gaplessPlayback: true,
       filterQuality: FilterQuality.medium,
-      color: dimmed ? const Color(0x99000000) : null,
-      colorBlendMode: dimmed ? BlendMode.darken : null,
       loadingBuilder: (
         BuildContext context,
         Widget child,
@@ -100,35 +113,58 @@ class _Thumbnail extends StatelessWidget {
   }
 }
 
-class _LockedNotice extends StatelessWidget {
-  const _LockedNotice();
+/// Gaussian-blurred, darkened thumbnail with the padlock. No decoder exists
+/// behind it, so the blur is the only cost of a locked page.
+class _LockedCover extends StatelessWidget {
+  const _LockedCover({required this.onTap});
+
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    return IgnorePointer(
-      child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+    return RepaintBoundary(
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: Stack(
+          fit: StackFit.expand,
           children: <Widget>[
-            Container(
-              width: 72,
-              height: 72,
-              decoration: BoxDecoration(
-                color: const Color(0x33FFFFFF),
-                borderRadius: BorderRadius.circular(24),
-              ),
-              child: const Icon(
-                Icons.lock_rounded,
-                size: 36,
-                color: AppColors.textPrimary,
+            ClipRect(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+                child: const ColoredBox(color: Color(0x73000000)),
               ),
             ),
-            const SizedBox(height: 16),
-            Text(
-              'Unlock with coins to watch',
-              style: textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w700,
+            Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  const Icon(
+                    Icons.lock_rounded,
+                    size: 48,
+                    color: Color(0xFFFFFFFF),
+                    shadows: <Shadow>[
+                      Shadow(color: Color(0x99000000), blurRadius: 16),
+                    ],
+                  ),
+                  const SizedBox(height: 14),
+                  Text(
+                    'Unlock to Watch',
+                    style: textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  if (onTap != null) ...<Widget>[
+                    const SizedBox(height: 6),
+                    Text(
+                      'Tap to see unlock options',
+                      style: textTheme.bodySmall?.copyWith(
+                        color: AppColors.textSecondary,
+                      ),
+                    ),
+                  ],
+                ],
               ),
             ),
           ],

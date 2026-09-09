@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../../core/errors/failures.dart';
 import '../../../auth/presentation/controllers/auth_controller.dart';
 import '../../../auth/presentation/controllers/auth_state.dart';
+import '../../../paywall/presentation/controllers/unlocked_episodes.dart';
 import '../../di/feed_providers.dart';
 import '../../domain/entities/episode.dart';
 import '../../domain/entities/episode_comment.dart';
@@ -12,12 +13,20 @@ part 'feed_controller.g.dart';
 
 /// Loads the feed and tracks the viewer's position and interactions in it.
 ///
+/// Entitlements come in through `unlockedEpisodesProvider`: every episode
+/// whose id is in that set is published with `isLocked == false`, whether
+/// the unlock was persisted earlier or happened a moment ago in the paywall.
+///
 /// Auto-disposed with the feed screen, so returning to the feed starts from
 /// the first episode with a fresh load.
 @riverpod
 class FeedController extends _$FeedController {
   @override
   FeedState build() {
+    ref.listen<Set<String>>(
+      unlockedEpisodesProvider,
+      (Set<String>? previous, Set<String> next) => _applyUnlocks(next),
+    );
     Future<void>.microtask(_load);
     return const FeedState();
   }
@@ -27,11 +36,14 @@ class FeedController extends _$FeedController {
     if (!ref.mounted) {
       return;
     }
+    final unlocked = ref.read(unlockedEpisodesProvider);
     state = state.copyWith(
       episodes: result.fold<AsyncValue<List<Episode>>>(
         (Failure failure) =>
             AsyncValue<List<Episode>>.error(failure, StackTrace.current),
-        (List<Episode> episodes) => AsyncValue<List<Episode>>.data(episodes),
+        (List<Episode> episodes) => AsyncValue<List<Episode>>.data(
+          _withUnlocks(episodes, unlocked),
+        ),
       ),
     );
   }
@@ -52,6 +64,9 @@ class FeedController extends _$FeedController {
     }
     state = state.copyWith(activeIndex: index);
   }
+
+  /// Publishes [episodeId] as unlocked in the loaded feed.
+  void markUnlocked(String episodeId) => _applyUnlocks(<String>{episodeId});
 
   void toggleLike(String episodeId) {
     final liked = Set<String>.of(state.likedEpisodeIds);
@@ -83,5 +98,38 @@ class FeedController extends _$FeedController {
       <EpisodeComment>[...state.commentsFor(episodeId), comment],
     );
     state = state.copyWith(comments: comments);
+  }
+
+  void _applyUnlocks(Set<String> unlocked) {
+    final loaded = state.loadedEpisodes;
+    if (loaded.isEmpty) {
+      return;
+    }
+    final updated = _withUnlocks(loaded, unlocked);
+    if (identical(updated, loaded)) {
+      return;
+    }
+    state = state.copyWith(
+      episodes: AsyncValue<List<Episode>>.data(updated),
+    );
+  }
+
+  /// [episodes] with every unlocked id flipped to `isLocked == false`.
+  /// Returns the same list instance when nothing changes.
+  static List<Episode> _withUnlocks(
+    List<Episode> episodes,
+    Set<String> unlocked,
+  ) {
+    if (unlocked.isEmpty ||
+        !episodes.any((Episode e) => e.isLocked && unlocked.contains(e.id))) {
+      return episodes;
+    }
+    return List<Episode>.unmodifiable(
+      episodes.map(
+        (Episode e) => e.isLocked && unlocked.contains(e.id)
+            ? e.copyWith(isLocked: false)
+            : e,
+      ),
+    );
   }
 }

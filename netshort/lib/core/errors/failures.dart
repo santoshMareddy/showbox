@@ -5,8 +5,11 @@ import 'package:flutter/foundation.dart';
 /// Failures are plain values: they carry a human-readable [message] and, when
 /// useful for diagnostics, the underlying [cause]. Equality ignores [cause] so
 /// two failures of the same kind and message compare equal in tests.
+///
+/// Implements [Exception] so a failure can also travel through an
+/// `AsyncValue.error` when a provider has no `Either` to return.
 @immutable
-sealed class Failure {
+sealed class Failure implements Exception {
   const Failure(this.message, {this.cause});
 
   /// Short description suitable for logging or showing to the user.

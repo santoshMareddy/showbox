@@ -23,9 +23,21 @@ lib/
   features/feed/                 Episode, FeedRepository (sample catalogue), FeedController,
                                  FeedScreen (vertical PageView), HUD overlay, comments sheet
   features/player/               PreloadManager (decoder window), EpisodePlayer (media_kit Video)
+  features/paywall/              Wallet, CoinPackage, PaywallRepository (Hive `wallet_box`),
+                                 WalletController, UnlockedEpisodes event, PaywallBottomSheet
 test/core/network/auth_interceptor_test.dart
 test/features/player/services/preload_manager_test.dart
+test/features/paywall/wallet_controller_test.dart
+test/features/paywall/hive_wallet_local_data_source_test.dart
+test/features/feed/feed_controller_test.dart
 ```
+
+## Stage 3 notes
+
+- New wallets start with 100 coins; an episode costs 10. Coins, VIP flag and the unlocked episode ids persist in the Hive box `wallet_box`, so an unlock survives a restart.
+- Coin deductions are optimistic: `WalletController` publishes the new balance before the repository answers and rolls back if it refuses. Purchases credit only after success.
+- A successful unlock adds the id to `unlockedEpisodesProvider`; `FeedController` listens and flips `isLocked`, the feed screen re-applies the decoder window and the episode starts playing. Locked episodes never mount a decoder: they show the blurred thumbnail with a padlock, and swiping onto one slides the paywall up.
+- The rewarded ad and the coin store are settled on the device (300 ms / instant); the billing API replaces `PaywallRepositoryImpl` behind the same interface.
 
 ## Stage 2 notes
 

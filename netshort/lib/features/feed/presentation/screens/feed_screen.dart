@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../app/theme/app_colors.dart';
 import '../../../../core/errors/failures.dart';
+import '../../../paywall/presentation/widgets/paywall_bottom_sheet.dart';
 import '../../../player/di/player_providers.dart';
 import '../../../player/services/preload_manager.dart';
 import '../../../player/widgets/episode_player.dart';
@@ -17,8 +18,10 @@ import '../widgets/feed_hud_overlay.dart';
 ///
 /// Every page change updates the [FeedController] and moves the
 /// [PreloadManager] window, which is what keeps the decoder count bounded.
-/// The screen also owns the app-lifecycle hook so nothing decodes while the
-/// app is in the background.
+/// Landing on a locked episode slides the paywall up; an unlock flips the
+/// episode in the feed state and the window is re-applied so the decoder
+/// mounts and plays at once. The screen also owns the app-lifecycle hook so
+/// nothing decodes while the app is in the background.
 class FeedScreen extends ConsumerStatefulWidget {
   const FeedScreen({super.key});
 
@@ -33,6 +36,9 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
   /// Keeps the auto-disposed manager alive for as long as this screen is.
   late final ProviderSubscription<PreloadManager> _manager;
 
+  /// Id of the episode whose paywall is currently open, if any.
+  String? _openPaywallEpisodeId;
+
   @override
   void initState() {
     super.initState();
@@ -46,6 +52,7 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
       (AsyncValue<List<Episode>>? previous, AsyncValue<List<Episode>> next) {
         if (next case AsyncData<List<Episode>>(:final value)) {
           _manager.read().setEpisodes(value);
+          _maybeShowPaywall(ref.read(feedControllerProvider).activeIndex);
         }
       },
       fireImmediately: true,
@@ -75,6 +82,45 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
 
   void _onPageChanged(int index) {
     ref.read(feedControllerProvider.notifier).setActiveIndex(index);
+    _manager.read().shiftWindow(index);
+    _maybeShowPaywall(index);
+  }
+
+  /// Opens the paywall for [index] once the page has settled, if that page
+  /// is still locked and still the one on screen.
+  void _maybeShowPaywall(int index) {
+    final episodes = ref.read(feedControllerProvider).loadedEpisodes;
+    if (index < 0 || index >= episodes.length || !episodes[index].isLocked) {
+      return;
+    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || _openPaywallEpisodeId != null) {
+        return;
+      }
+      final state = ref.read(feedControllerProvider);
+      if (state.activeIndex != index) {
+        return;
+      }
+      final current = state.loadedEpisodes;
+      if (index < current.length && current[index].isLocked) {
+        _openPaywall(current[index], index);
+      }
+    });
+  }
+
+  Future<void> _openPaywall(Episode episode, int index) async {
+    if (_openPaywallEpisodeId != null) {
+      return;
+    }
+    _openPaywallEpisodeId = episode.id;
+    final unlocked = await PaywallBottomSheet.show(context, episode: episode);
+    _openPaywallEpisodeId = null;
+    if (!mounted || unlocked != true) {
+      return;
+    }
+    // The unlock already flipped `isLocked` in the feed state (through
+    // `unlockedEpisodesProvider`). Re-applying the window mounts the decoder
+    // for this page, which autoplays because it is the current index.
     _manager.read().shiftWindow(index);
   }
 
@@ -108,8 +154,11 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
             physics: const ClampingScrollPhysics(),
             itemCount: value.length,
             onPageChanged: _onPageChanged,
-            itemBuilder: (BuildContext context, int index) =>
-                _FeedPage(episode: value[index], index: index),
+            itemBuilder: (BuildContext context, int index) => _FeedPage(
+              episode: value[index],
+              index: index,
+              onLockedTap: () => _openPaywall(value[index], index),
+            ),
           ),
         AsyncError<List<Episode>>(:final error) => _FeedMessage(
             icon: Icons.cloud_off_rounded,
@@ -129,10 +178,15 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
 /// Video underneath, HUD on top. Rebuilds only when its own episode's
 /// active / liked / comment state changes.
 class _FeedPage extends ConsumerWidget {
-  const _FeedPage({required this.episode, required this.index});
+  const _FeedPage({
+    required this.episode,
+    required this.index,
+    required this.onLockedTap,
+  });
 
   final Episode episode;
   final int index;
+  final VoidCallback onLockedTap;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -151,7 +205,12 @@ class _FeedPage extends ConsumerWidget {
     return Stack(
       fit: StackFit.expand,
       children: <Widget>[
-        EpisodePlayer(episode: episode, index: index, isActive: isActive),
+        EpisodePlayer(
+          episode: episode,
+          index: index,
+          isActive: isActive,
+          onLockedTap: onLockedTap,
+        ),
         FeedHudOverlay(
           episode: episode,
           isLiked: isLiked,

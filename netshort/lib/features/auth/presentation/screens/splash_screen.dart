@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../app/routes/app_routes.dart';
 import '../../../../app/theme/app_colors.dart';
+import '../../../paywall/presentation/controllers/wallet_controller.dart';
 import '../controllers/auth_controller.dart';
 
 /// First screen. Shows the NetShort brand while the stored session is
@@ -42,8 +43,10 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
 
   Future<void> _bootstrap() async {
     final auth = ref.read(authControllerProvider.notifier);
+    final wallet = ref.read(walletControllerProvider.notifier);
     await Future.wait<void>(<Future<void>>[
       auth.restoreSession(),
+      wallet.loadWallet(),
       Future<void>.delayed(_minimumDisplay),
     ]);
     if (!mounted) {

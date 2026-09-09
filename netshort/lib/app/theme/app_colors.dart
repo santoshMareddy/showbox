@@ -5,7 +5,11 @@ import 'package:flutter/material.dart';
 abstract final class AppColors {
   static const Color pureBlack = Color(0xFF000000);
   static const Color surfaceDark = Color(0xFF121212);
+  static const Color sheetBackground = Color(0xFF161616);
   static const Color surfaceRaised = Color(0xFF1C1C1E);
+
+  /// Coins and anything money-like; kept distinct from the crimson accent.
+  static const Color coinGold = Color(0xFFFBBF24);
 
   static const Color brandPrimary = Color(0xFFE11D48);
   static const Color brandPrimaryDeep = Color(0xFF9F1239);
